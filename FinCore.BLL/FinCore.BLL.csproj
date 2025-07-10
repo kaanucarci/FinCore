@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FinCore.DAL\FinCore.DAL.csproj" />
+      <ProjectReference Include="..\FinCore.Entities\FinCore.Entities.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Interfaces\" />
+      <Folder Include="Repositories\" />
+      <Folder Include="Services\" />
+    </ItemGroup>
+
+</Project>
