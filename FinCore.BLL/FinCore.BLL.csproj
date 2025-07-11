@@ -11,10 +11,4 @@
       <ProjectReference Include="..\FinCore.Entities\FinCore.Entities.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Interfaces\" />
-      <Folder Include="Repositories\" />
-      <Folder Include="Services\" />
-    </ItemGroup>
-
 </Project>

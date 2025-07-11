@@ -6,6 +6,6 @@ public class Budget : BaseEntity
     public int Month { get; set; }
     public decimal Amount { get; set; }
 
-    public ICollection<Expense>? Expenses { get; set; }
-    public ICollection<Saving>? Savings { get; set; }
+    public virtual ICollection<Expense>? Expenses { get; set; }
+    public virtual ICollection<Saving>? Savings { get; set; }
 }
