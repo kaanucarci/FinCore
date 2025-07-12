@@ -15,3 +15,4 @@
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.BLL/obj/Debug/net8.0/refint/FinCore.BLL.dll
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.BLL/obj/Debug/net8.0/FinCore.BLL.pdb
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.BLL/obj/Debug/net8.0/ref/FinCore.BLL.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.BLL/obj/Debug/net8.0/FinCore.BLL.sourcelink.json

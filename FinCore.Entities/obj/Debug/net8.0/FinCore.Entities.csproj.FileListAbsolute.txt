@@ -9,3 +9,4 @@
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Entities/obj/Debug/net8.0/refint/FinCore.Entities.dll
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Entities/obj/Debug/net8.0/FinCore.Entities.pdb
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Entities/obj/Debug/net8.0/ref/FinCore.Entities.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Entities/obj/Debug/net8.0/FinCore.Entities.sourcelink.json

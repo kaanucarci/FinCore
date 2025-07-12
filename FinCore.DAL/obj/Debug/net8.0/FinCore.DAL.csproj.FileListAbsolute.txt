@@ -15,3 +15,4 @@
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.DAL/obj/Debug/net8.0/FinCore.DAL.pdb
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.DAL/obj/Debug/net8.0/FinCore.DAL.genruntimeconfig.cache
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.DAL/obj/Debug/net8.0/ref/FinCore.DAL.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.DAL/obj/Debug/net8.0/FinCore.DAL.sourcelink.json
