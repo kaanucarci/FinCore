@@ -6,7 +6,7 @@ public interface IExpenseService
 {
     Task<List<Expense>> GetAllAsync(int budgetId);
     Task<Expense?> GetByIdAsync(int id);
-    Task AddAsync(Expense expense);
-    Task UpdateAsync(Expense expense);
-    Task Delete(Expense expense);
+    Task AddAsync(Expense expense, int budgetId);
+    Task UpdateAsync(Expense expense, int budgetId);
+    Task DeleteAsync(Expense expense);
 }
