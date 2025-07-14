@@ -17,19 +17,19 @@ public abstract class FinanceEntryServiceBase<T> where T : BaseEntity
 
     protected async Task<Budget> ValidateBudgetAsync(int budgetId)
     {
-        var budget = await _budgetRepo.GetByIdAsync(budgetId)
-                     ?? throw new ArgumentException("Budget not found.");
-        return budget;
+        var budget = await _budgetRepo.GetByIdAsync(budgetId);
+                     
+        return budget is null ? throw new ArgumentException("Budget not found.") : budget;
     }
     
     protected async Task FinanceEntryValidateAsync(decimal amount, int budgetId)
     {
         if (amount <= 0)
-            throw new ArgumentException("Amount must be greater than zero.");
+            throw new ArgumentException("Sıfırdan büyük bir miktar girmelisiniz.");
 
-        var budget = ValidateBudgetAsync(budgetId).Result;
+        var budget =  await ValidateBudgetAsync(budgetId);
 
         if (amount > budget.Amount)
-            throw new ArgumentException("Amount cannot exceed the budget total.");
+            throw new ArgumentException("Girilen miktar kalan bütçeden fazla olamaz.");
     }
 }
