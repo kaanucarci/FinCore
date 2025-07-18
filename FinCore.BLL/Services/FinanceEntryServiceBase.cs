@@ -31,5 +31,12 @@ public abstract class FinanceEntryServiceBase<T> where T : BaseEntity
 
         if (amount > budget.Amount)
             throw new ArgumentException("Girilen miktar kalan bütçeden fazla olamaz.");
+        UpdateBudgetAmountAsync(budget, amount);
+    }
+
+    protected void UpdateBudgetAmountAsync(Budget budget, decimal amount)
+    {
+        budget.Amount -= amount; 
+        _budgetRepo.Update(budget);
     }
 }
