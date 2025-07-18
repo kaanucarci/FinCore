@@ -2,10 +2,13 @@ using AutoMapper;
 using FinCore.Api.DTOs;
 using FinCore.BLL.Interfaces;
 using FinCore.Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinCore.Api.Controllers;
 
+
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ExpenseController(IExpenseService expenseService, IMapper mapper, IBudgetService budgetService) : ControllerBase

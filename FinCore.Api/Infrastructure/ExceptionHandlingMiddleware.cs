@@ -24,13 +24,13 @@ public class ExceptionHandlingMiddleware : IMiddleware
 
             await context.Response.WriteAsync(JsonSerializer.Serialize(payload));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             context.Response.ContentType = "application/json";
 
             await context.Response.WriteAsync(
-                JsonSerializer.Serialize(new { error = "ServerError", message = "Unexpected error" }));
+                JsonSerializer.Serialize(new { error = "ServerError", message = ex.Message ?? "Unexpected error" }));
         }
     }
 }
