@@ -8,12 +8,12 @@ namespace FinCore.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ExpenseController(IExpenseService service, IMapper mapper) : ControllerBase
+public class ExpenseController(IExpenseService expenseService, IMapper mapper, IBudgetService budgetService) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<ExpenseDto.ExpenseCreateDto>> GetAll(int budgetId)
     {
-        var list = await service.GetAllAsync(budgetId);
+        var list = await expenseService.GetAllAsync(budgetId);
         return list is null
             ? NotFound()
             : Ok(mapper.Map<List<ExpenseDto.ExpenseReadDto>>(list));
@@ -22,7 +22,7 @@ public class ExpenseController(IExpenseService service, IMapper mapper) : Contro
     [HttpGet("id:{id}")]
     public async Task<ActionResult<ExpenseDto.ExpenseReadDto>> Get(int id)
     {
-        var expense = await service.GetByIdAsync(id);
+        var expense = await expenseService.GetByIdAsync(id);
         return expense is null
             ? NotFound()
             : Ok(mapper.Map<ExpenseDto.ExpenseReadDto>(expense));
@@ -32,7 +32,7 @@ public class ExpenseController(IExpenseService service, IMapper mapper) : Contro
     public async Task<ActionResult<ExpenseDto.ExpenseReadDto>> Create(ExpenseDto.ExpenseCreateDto dto)
     {
         var entity = mapper.Map<Expense>(dto);
-        await service.AddAsync(entity);
+        await expenseService.AddAsync(entity);
         
         var read = mapper.Map<ExpenseDto.ExpenseReadDto>(entity);
         return CreatedAtAction(nameof(Get), new { id = read.Id }, read);

@@ -25,9 +25,9 @@ public class SavingService :
     public async Task<Saving?> GetByIdAsync(int id)
         => await _repo.GetByIdAsync(id);
 
-    public async Task AddAsync(Saving saving, int budgetId)
+    public async Task AddAsync(Saving saving)
     {
-        await FinanceEntryValidateAsync(saving.Amount, budgetId);
+        await FinanceEntryValidateAsync(saving.Amount, saving.BudgetId);
         await _repo.AddAsync(saving);
         await _repo.SaveChangesAsync();
     }
