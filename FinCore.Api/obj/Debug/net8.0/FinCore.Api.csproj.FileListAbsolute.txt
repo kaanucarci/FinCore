@@ -176,3 +176,4 @@
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/FinCore.Api.sourcelink.json
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/AutoMapper.dll
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
