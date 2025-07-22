@@ -177,3 +177,8 @@
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/AutoMapper.dll
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/Microsoft.Extensions.Diagnostics.Abstractions.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/Microsoft.Extensions.Hosting.Abstractions.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/Microsoft.Extensions.ObjectPool.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/Newtonsoft.Json.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/System.Net.WebSockets.WebSocketProtocol.dll
