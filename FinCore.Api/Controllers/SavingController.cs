@@ -1,5 +1,5 @@
 using AutoMapper;
-using FinCore.Api.DTOs;
+using FinCore.Entities.DTOs;
 using FinCore.BLL.Interfaces;
 using FinCore.Entities.Models;
 using Microsoft.AspNetCore.Authorization;
