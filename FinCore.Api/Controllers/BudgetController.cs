@@ -1,5 +1,5 @@
 using AutoMapper;
-using FinCore.Api.DTOs;
+using FinCore.Entities.DTOs;
 using FinCore.BLL.Interfaces;
 using FinCore.Entities.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -19,13 +19,11 @@ public class BudgetController(IBudgetService service, IMapper mapper) : Controll
         return Ok(mapper.Map<List<BudgetDto.BudgetReadDto>>(list));
     }
 
-    [HttpGet("id:{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<BudgetDto.BudgetReadDto>> Get(int id)
     {
-        var entity = await service.GetByIdAsync(id);
-        return entity is null
-            ? NotFound()
-            : Ok(mapper.Map<BudgetDto.BudgetReadDto>(entity));
+        var entity = await service.GetInfoByIdAsync(id);
+        return Ok(mapper.Map<BudgetInfoDto>(entity));
     }
 
     [HttpPost]
@@ -36,5 +34,15 @@ public class BudgetController(IBudgetService service, IMapper mapper) : Controll
 
         var read = mapper.Map<BudgetDto.BudgetReadDto>(entity);
         return CreatedAtAction(nameof(Get), new { id = read.Id }, read);
+    }
+    
+    [HttpPut("{budgetId}")]
+    public async Task<ActionResult<BudgetDto.BudgetReadDto>> Update( [FromRoute] int budgetId, BudgetDto.BudgetUpdateDto dto)
+    {
+        var entity = mapper.Map<Budget>(dto);
+        var updatedEntity = await service.UpdateAsync(entity, budgetId);
+
+        var read = mapper.Map<BudgetInfoDto>(updatedEntity);
+        return Ok(read); 
     }
 }

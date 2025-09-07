@@ -1,6 +1,6 @@
 using AutoMapper;
 using FinCore.Entities.Models;
-using FinCore.Api.DTOs;
+using FinCore.Entities.DTOs;
 
 namespace FinCore.Api.Mapping;
 
@@ -12,8 +12,9 @@ public class MappingProfile : Profile
         CreateMap<BudgetDto.BudgetCreateDto, Budget>()
             .ForMember(d => d.Amount,
                 o => o.MapFrom(s => s.TotalAmount));
-
         CreateMap<Budget, BudgetDto.BudgetReadDto>();
+        CreateMap<BudgetDto.BudgetUpdateDto, Budget>();
+        
         // Expense
         CreateMap<ExpenseDto.ExpenseCreateDto, Expense>();
         CreateMap<Expense, ExpenseDto.ExpenseReadDto>();

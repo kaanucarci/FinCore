@@ -79,11 +79,6 @@
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/FinCore.Api.MvcApplicationPartsAssemblyInfo.cache
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/staticwebassets.build.json
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/staticwebassets.development.json
-/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/staticwebassets/msbuild.FinCore.Api.Microsoft.AspNetCore.StaticWebAssets.props
-/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/staticwebassets/msbuild.build.FinCore.Api.props
-/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.FinCore.Api.props
-/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.FinCore.Api.props
-/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/staticwebassets.pack.json
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/scopedcss/bundle/FinCore.Api.styles.css
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/FinCore..FF70D84D.Up2Date
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/FinCore.Api.dll
@@ -182,3 +177,10 @@
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/Microsoft.Extensions.ObjectPool.dll
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/Newtonsoft.Json.dll
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/System.Net.WebSockets.WebSocketProtocol.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/FinCore.Api.staticwebassets.endpoints.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/rpswa.dswa.cache.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/rjimswa.dswa.cache.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/rjsmrazor.dswa.cache.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/rjsmcshtml.dswa.cache.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/staticwebassets.build.json.cache
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/obj/Debug/net8.0/staticwebassets.build.endpoints.json

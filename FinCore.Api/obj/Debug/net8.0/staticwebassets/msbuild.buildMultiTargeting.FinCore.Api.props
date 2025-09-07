@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../build/FinCore.Api.props" />
-</Project>

@@ -1,5 +1,5 @@
-using FinCore.Api.DTOs;
 using FinCore.BLL.Interfaces;
+using FinCore.Entities.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
