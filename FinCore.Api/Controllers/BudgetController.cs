@@ -45,4 +45,11 @@ public class BudgetController(IBudgetService service, IMapper mapper) : Controll
         var read = mapper.Map<BudgetInfoDto>(updatedEntity);
         return Ok(read); 
     }
+    
+    [HttpGet("list/{budgetId}")]
+    public async Task<ActionResult<BudgetDto.BudgetReadDto>> List( [FromRoute] int budgetId, [FromQuery] int page, [FromQuery] BudgetListRequestDto dto)
+    {
+        var list = await service.GetListAsync(budgetId, dto, page);
+        return Ok(list); 
+    }
 }
