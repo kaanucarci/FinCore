@@ -622,7 +622,7 @@
         },
         "runtime": {
           "FinCore.DAL.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -630,7 +630,7 @@
       "FinCore.Entities/1.0.0": {
         "runtime": {
           "FinCore.Entities.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
