@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ua9vRUO6ong=",
+  "dgSpecHash": "/Fmjc5T+wgw=",
   "success": true,
   "projectFilePath": "/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Entities/FinCore.Entities.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/kaanucarci/.nuget/packages/microsoft.netcore.app.ref/8.0.19/microsoft.netcore.app.ref.8.0.19.nupkg.sha512",
+    "/Users/kaanucarci/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.19/microsoft.aspnetcore.app.ref.8.0.19.nupkg.sha512"
+  ],
   "logs": []
 }

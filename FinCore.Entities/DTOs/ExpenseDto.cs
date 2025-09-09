@@ -1,4 +1,4 @@
-namespace FinCore.Api.DTOs;
+namespace FinCore.Entities.DTOs;
 
 public class ExpenseDto
 {

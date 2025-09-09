@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "oKf+T5jDyH4=",
+  "dgSpecHash": "cjtW17Rv7lg=",
   "success": true,
   "projectFilePath": "/Users/kaanucarci/Desktop/c#/FinCore/FinCore.DAL/FinCore.DAL.csproj",
   "expectedPackageFiles": [
@@ -81,7 +81,9 @@
     "/Users/kaanucarci/.nuget/packages/system.text.json/9.0.7/system.text.json.9.0.7.nupkg.sha512",
     "/Users/kaanucarci/.nuget/packages/system.threading.channels/7.0.0/system.threading.channels.7.0.0.nupkg.sha512",
     "/Users/kaanucarci/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "/Users/kaanucarci/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512"
+    "/Users/kaanucarci/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512",
+    "/Users/kaanucarci/.nuget/packages/microsoft.netcore.app.ref/8.0.19/microsoft.netcore.app.ref.8.0.19.nupkg.sha512",
+    "/Users/kaanucarci/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.19/microsoft.aspnetcore.app.ref.8.0.19.nupkg.sha512"
   ],
   "logs": []
 }
