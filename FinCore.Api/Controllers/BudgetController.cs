@@ -49,6 +49,9 @@ public class BudgetController(IBudgetService service, IMapper mapper) : Controll
     [HttpGet("list/{budgetId}")]
     public async Task<ActionResult<BudgetDto.BudgetReadDto>> List( [FromRoute] int budgetId, [FromQuery] int page, [FromQuery] BudgetListRequestDto dto)
     {
+        if (page < 1) 
+            page = 1;
+        
         var list = await service.GetListAsync(budgetId, dto, page);
         return Ok(list); 
     }

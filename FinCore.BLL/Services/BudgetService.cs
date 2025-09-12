@@ -127,7 +127,7 @@ public class BudgetService(
         List<ExpenseListDto> expenseList = new();
 
         // --- SAVINGS ---
-        if (budgetListDto.ExpenseType != ExpenseType.Expense)
+        if (budgetListDto.ExpenseType is null || budgetListDto.ExpenseType != ExpenseType.Expense)
         {
             var savings = savingRepo.Query()
                 .Where(b => b.BudgetId == budgetId && b.Budget.Year == budgetListDto.BudgetYear);
@@ -157,13 +157,14 @@ public class BudgetService(
                     Amount = s.Amount,
                     Description = s.Description,
                     CreatedDate = s.CreatedDate,
-                    UpdatedDate = s.UpdatedDate != null ? s.UpdatedDate : null
+                    UpdatedDate = s.UpdatedDate != null ? s.UpdatedDate : null,
+                    ExpenseType = ExpenseType.Saving
                 })
                 .ToListAsync();
         }
 
         // --- EXPENSES ---
-        if (budgetListDto.ExpenseType != ExpenseType.Saving)
+        if (budgetListDto.ExpenseType is null || budgetListDto.ExpenseType != ExpenseType.Saving)
         {
             var expenses = expenseRepo.Query()
                 .Where(b => b.BudgetId == budgetId && b.Budget.Year == budgetListDto.BudgetYear);
@@ -193,7 +194,8 @@ public class BudgetService(
                     Amount = e.Amount,
                     Description = e.Description,
                     CreatedDate = e.CreatedDate,
-                    UpdatedDate = e.UpdatedDate != null ? e.UpdatedDate : null
+                    UpdatedDate = e.UpdatedDate != null ? e.UpdatedDate : null,
+                    ExpenseType = ExpenseType.Expense
                 })
                 .ToListAsync();
         }
