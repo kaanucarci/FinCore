@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using FinCore.Entities.Models;
 
 namespace FinCore.Entities.DTOs;
 
@@ -24,7 +25,7 @@ public class BudgetListRequestDto
 {
     public string? StartDate { get; set; }
     public string? EndDate { get; set; }
-    public ExpenseType ExpenseType { get; set; }
+    public ExpenseType? ExpenseType { get; set; } = null;
     [Required]
     public int BudgetYear { get; set; }
 }
@@ -54,4 +55,5 @@ public class ExpenseListDto
     public string? Description { get; set; }
     public DateTime CreatedDate { get; set; }
     public DateTime? UpdatedDate { get; set; }
+    public ExpenseType? ExpenseType { get; set; }
 }
