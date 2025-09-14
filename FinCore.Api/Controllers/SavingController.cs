@@ -39,4 +39,14 @@ public class SavingController(ISavingService savingService, IMapper mapper, IBud
         var read = mapper.Map<SavingDto.SavingReadDto>(entity);
         return CreatedAtAction(nameof(Get), new { id = read.Id }, read);
     }   
+    
+    [HttpPut("{savingId}")]
+    public async Task<ActionResult<SavingDto.SavingReadDto>> Update([FromRoute] int savingId, SavingDto.SavingUpdateDto dto)
+    {
+        var entity = mapper.Map<Saving>(dto);
+        await savingService.UpdateAsync(savingId, entity);
+        
+        var read = mapper.Map<SavingDto.SavingReadDto>(entity);
+        return read;
+    }
 }

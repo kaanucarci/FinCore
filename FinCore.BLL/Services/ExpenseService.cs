@@ -32,9 +32,10 @@ public class ExpenseService :
         await _repo.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Expense expense, int budgetId)
+    public async Task UpdateAsync(int expenseId, Expense expense)
     {
-        await FinanceEntryValidateAsync(expense.Amount, budgetId);
+        expense.Id = expenseId;
+        await FinanceEntryValidateAsync(expense.Amount, expense.BudgetId);
         _repo.Update(expense);
         await _repo.SaveChangesAsync();
     }
