@@ -22,10 +22,10 @@ public class ExpenseController(IExpenseService expenseService, IMapper mapper, I
             : Ok(mapper.Map<List<ExpenseDto.ExpenseReadDto>>(list));
     }
 
-    [HttpGet("id:{id}")]
-    public async Task<ActionResult<ExpenseDto.ExpenseReadDto>> Get(int id)
+    [HttpGet("{expenseId}")]
+    public async Task<ActionResult<ExpenseDto.ExpenseReadDto>> Get(int expenseId)
     {
-        var expense = await expenseService.GetByIdAsync(id);
+        var expense = await expenseService.GetByIdAsync(expenseId);
         return expense is null
             ? NotFound()
             : Ok(mapper.Map<ExpenseDto.ExpenseReadDto>(expense));
@@ -39,5 +39,15 @@ public class ExpenseController(IExpenseService expenseService, IMapper mapper, I
         
         var read = mapper.Map<ExpenseDto.ExpenseReadDto>(entity);
         return CreatedAtAction(nameof(Get), new { id = read.Id }, read);
+    }
+    
+    [HttpPut("{expenseId}")]
+    public async Task<ActionResult<ExpenseDto.ExpenseReadDto>> Update([FromRoute] int expenseId, ExpenseDto.ExpenseUpdateDto dto)
+    {
+        var entity = mapper.Map<Expense>(dto);
+        await expenseService.UpdateAsync(expenseId, entity);
+        
+        var read = mapper.Map<ExpenseDto.ExpenseReadDto>(entity);
+        return read;
     }
 }

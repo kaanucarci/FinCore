@@ -32,20 +32,21 @@ public class SavingService :
         await _repo.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Saving saving, int budgetId)
+    public async Task UpdateAsync(int savingId, Saving saving)
     {
-        await FinanceEntryValidateAsync(saving.Amount, budgetId);
+        saving.Id = savingId;
+        await FinanceEntryValidateAsync(saving.Amount, saving.BudgetId);
         _repo.Update(saving);
         await _repo.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(Saving saving)
     {
-        var exp = await _repo.GetByIdAsync(saving.Id);
+        var entity = await _repo.GetByIdAsync(saving.Id);
 
-        if (exp is not null)
+        if (entity is not null)
         {
-            _repo.Delete(exp);
+            _repo.Delete(entity);
             await _repo.SaveChangesAsync();
         }
     }

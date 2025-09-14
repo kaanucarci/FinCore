@@ -7,6 +7,6 @@ public interface ISavingService
     Task<List<Saving>> GetAllAsync(int budgetId);
     Task<Saving?> GetByIdAsync(int id);
     Task AddAsync(Saving saving);
-    Task UpdateAsync(Saving saving, int budgetId);
+    Task UpdateAsync(int savingId, Saving saving);
     Task DeleteAsync(Saving saving);
 }
