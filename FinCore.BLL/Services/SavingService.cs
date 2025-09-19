@@ -34,11 +34,17 @@ public class SavingService :
 
     public async Task UpdateAsync(int savingId, Saving saving)
     {
-        saving.Id = savingId;
-        await FinanceEntryValidateAsync(saving.Amount, saving.BudgetId);
-        _repo.Update(saving);
+        var existing = await _repo.GetByIdAsync(savingId);
+        if (existing == null)
+            throw new Exception("Saving not found");
+        
+        existing.Amount = saving.Amount;
+        existing.Description = saving.Description;
+        existing.UpdatedDate = DateTime.UtcNow;
+
         await _repo.SaveChangesAsync();
     }
+
 
     public async Task DeleteAsync(Saving saving)
     {
