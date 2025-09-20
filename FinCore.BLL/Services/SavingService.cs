@@ -46,14 +46,22 @@ public class SavingService :
     }
 
 
-    public async Task DeleteAsync(Saving saving)
+    public async Task DeleteAsync(int savingId)
     {
-        var entity = await _repo.GetByIdAsync(saving.Id);
+        var entity = await _repo.GetByIdAsync(savingId);
 
         if (entity is not null)
         {
+            var budget = await _budgetRepo.GetByIdAsync(entity.BudgetId);
+            budget.Amount += entity.Amount;
+            await _budgetRepo.SaveChangesAsync();
+
             _repo.Delete(entity);
             await _repo.SaveChangesAsync();
+        }
+        else
+        {
+            throw new Exception("Expense Not Found");
         }
     }
 }

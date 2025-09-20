@@ -49,4 +49,11 @@ public class SavingController(ISavingService savingService, IMapper mapper, IBud
         var read = mapper.Map<SavingDto.SavingReadDto>(entity);
         return read;
     }
+    
+    [HttpDelete("{savingId}")]
+    public async Task<OkObjectResult> Delete([FromRoute] int savingId)
+    {
+        await savingService.DeleteAsync(savingId);
+        return Ok("Deleted Succesfully");
+    }
 }
