@@ -38,7 +38,7 @@ public class ExpenseController(IExpenseService expenseService, IMapper mapper, I
         await expenseService.AddAsync(entity);
         
         var read = mapper.Map<ExpenseDto.ExpenseReadDto>(entity);
-        return CreatedAtAction(nameof(Get), new { id = read.Id }, read);
+        return CreatedAtAction(nameof(Get), new { expenseId = read.Id }, read);
     }
     
     [HttpPut("{expenseId}")]
@@ -47,7 +47,19 @@ public class ExpenseController(IExpenseService expenseService, IMapper mapper, I
         var entity = mapper.Map<Expense>(dto);
         await expenseService.UpdateAsync(expenseId, entity);
         
-        var read = mapper.Map<ExpenseDto.ExpenseReadDto>(entity);
-        return read;
+        var updated = await expenseService.GetByIdAsync(expenseId);
+        if (updated == null)
+            return NotFound();
+
+        var read = mapper.Map<ExpenseDto.ExpenseReadDto>(updated);
+        return Ok(read);
+    }
+
+    
+    [HttpDelete("{expenseId}")]
+    public async Task<OkObjectResult> Delete([FromRoute] int expenseId)
+    {
+        await expenseService.DeleteAsync(expenseId);
+        return Ok("Deleted Succesfully");
     }
 }

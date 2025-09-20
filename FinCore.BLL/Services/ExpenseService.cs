@@ -34,20 +34,33 @@ public class ExpenseService :
 
     public async Task UpdateAsync(int expenseId, Expense expense)
     {
-        expense.Id = expenseId;
-        await FinanceEntryValidateAsync(expense.Amount, expense.BudgetId);
-        _repo.Update(expense);
+        var existing = await _repo.GetByIdAsync(expenseId);
+        if (existing == null)
+            throw new Exception("Expense not found");
+        
+        existing.Amount = expense.Amount;
+        existing.Description = expense.Description;
+        existing.UpdatedDate = DateTime.UtcNow;
+
         await _repo.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(Expense expense)
+    public async Task DeleteAsync(int expenseId)
     {
-        var exp = await _repo.GetByIdAsync(expense.Id);
+        var entity = await _repo.GetByIdAsync(expenseId);
 
-        if (exp is not null)
+        if (entity is not null)
         {
-            _repo.Delete(exp);
+            var budget = await _budgetRepo.GetByIdAsync(entity.BudgetId);
+            budget.Amount += entity.Amount;
+            await _budgetRepo.SaveChangesAsync();
+            
+            _repo.Delete(entity);
             await _repo.SaveChangesAsync();
+        }
+        else
+        {
+            throw new Exception("Expense Not Found");
         }
     }
 }
