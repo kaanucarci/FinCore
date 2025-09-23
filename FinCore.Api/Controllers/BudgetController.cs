@@ -55,4 +55,10 @@ public class BudgetController(IBudgetService service, IMapper mapper) : Controll
         var list = await service.GetListAsync(budgetId, dto, page);
         return Ok(list); 
     }
+    
+    [HttpGet("year")]
+    public async Task<List<int>> Year()
+    {
+        return await service.GetYearsAsync();
+    }
 }
