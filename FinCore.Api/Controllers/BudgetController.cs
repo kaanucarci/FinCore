@@ -12,10 +12,10 @@ namespace FinCore.Api.Controllers;
 [Route("api/[controller]")]
 public class BudgetController(IBudgetService service, IMapper mapper) : ControllerBase
 {
-    [HttpGet]
-    public async Task<ActionResult<BudgetDto.BudgetReadDto>> GetAll()
+    [HttpGet("get/{year}")]
+    public async Task<ActionResult<BudgetDto.BudgetReadDto>> GetAll(int year)
     {
-        var list = await service.GetAllAsync();
+        var list = await service.GetAllAsync(year);
         return Ok(mapper.Map<List<BudgetDto.BudgetReadDto>>(list));
     }
 
@@ -61,4 +61,15 @@ public class BudgetController(IBudgetService service, IMapper mapper) : Controll
     {
         return await service.GetYearsAsync();
     }
+    
+    [HttpPost("year/{year}")]
+    public async Task<ActionResult> Year(int year)
+    {
+        await service.CreateYearAsync(year);
+        return StatusCode(201, new 
+        {
+            status = 201,
+            message = "Bütçe Yılı Oluşturuldu!"
+        });
+    }   
 }
