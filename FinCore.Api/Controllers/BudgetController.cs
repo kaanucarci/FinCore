@@ -20,9 +20,9 @@ public class BudgetController(IBudgetService service, IMapper mapper) : Controll
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<BudgetDto.BudgetReadDto>> Get(int id)
+    public async Task<ActionResult<BudgetDto.BudgetReadDto>> Get(int id, [FromQuery] int budgetYear)
     {
-        var entity = await service.GetInfoByIdAsync(id);
+        var entity = await service.GetInfoByIdAsync(id, budgetYear);
         return Ok(mapper.Map<BudgetInfoDto>(entity));
     }
 
