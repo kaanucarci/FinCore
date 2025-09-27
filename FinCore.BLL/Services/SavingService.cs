@@ -34,14 +34,24 @@ public class SavingService :
 
     public async Task UpdateAsync(int savingId, Saving saving)
     {
+        var budget = await _budgetRepo.GetByIdAsync(saving.BudgetId);
+        if (budget == null)
+            throw new Exception("Budget not found");
+        
         var existing = await _repo.GetByIdAsync(savingId);
         if (existing == null)
             throw new Exception("Saving not found");
+
+        if (budget.Amount < saving.Amount)
+            throw new Exception("Budget amount is not enough");
+        
+        var diffrance = existing.Amount - saving.Amount;
+        budget.Amount += diffrance;
+        await _budgetRepo.SaveChangesAsync();
         
         existing.Amount = saving.Amount;
         existing.Description = saving.Description;
         existing.UpdatedDate = DateTime.UtcNow;
-
         await _repo.SaveChangesAsync();
     }
 
@@ -61,7 +71,7 @@ public class SavingService :
         }
         else
         {
-            throw new Exception("Expense Not Found");
+            throw new Exception("saving Not Found");
         }
     }
 }

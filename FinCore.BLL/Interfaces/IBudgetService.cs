@@ -5,11 +5,13 @@ namespace FinCore.BLL.Interfaces;
 
 public interface IBudgetService
 {
-       Task<List<Budget>> GetAllAsync();
+       Task<List<Budget>> GetAllAsync(int year);
        Task<Budget?> GetByIdAsync(int id);
-       Task<BudgetInfoDto> GetInfoByIdAsync(int id);
+       Task<BudgetInfoDto> GetInfoByIdAsync(int id, int budgetYear);
        Task AddAsync(Budget budget);
        Task<BudgetInfoDto> UpdateAsync(Budget budget, int id);
        Task<List<BudgetListResponseDto>> GetListAsync(int id, BudgetListRequestDto budgetListDto, int page = 1);
        Task Delete(Budget budget);
+       Task<List<int>> GetYearsAsync();
+       Task CreateYearAsync(int year);
 }
