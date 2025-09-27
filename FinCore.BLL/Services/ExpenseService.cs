@@ -34,14 +34,25 @@ public class ExpenseService :
 
     public async Task UpdateAsync(int expenseId, Expense expense)
     {
+        var budget = await _budgetRepo.GetByIdAsync(expense.BudgetId);
+        if (budget == null)
+            throw new Exception("Budget not found");
+        
         var existing = await _repo.GetByIdAsync(expenseId);
         if (existing == null)
             throw new Exception("Expense not found");
+
+        if (budget.Amount < expense.Amount)
+            throw new Exception("Budget amount is not enough");
+        
+        var diffrance = existing.Amount - expense.Amount;
+        budget.Amount += diffrance;
+        await _budgetRepo.SaveChangesAsync();
         
         existing.Amount = expense.Amount;
         existing.Description = expense.Description;
+        existing.ExpenseType = expense.ExpenseType;
         existing.UpdatedDate = DateTime.UtcNow;
-
         await _repo.SaveChangesAsync();
     }
 

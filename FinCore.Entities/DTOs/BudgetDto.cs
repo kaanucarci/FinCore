@@ -36,13 +36,12 @@ public class BudgetListResponseDto
     public int Page { get; set; }
     public int PageSize { get; set; }
     public List<ExpenseListDto> Expenses { get; set; } = new();
-    public List<ExpenseListDto> Savings { get; set; } = new();
 }
 
 
 public enum ExpenseType
 {
-    None,   
+    None,
     Expense,
     Saving  
 }
@@ -56,4 +55,9 @@ public class ExpenseListDto
     public DateTime CreatedDate { get; set; }
     public DateTime? UpdatedDate { get; set; }
     public ExpenseType? ExpenseType { get; set; }
+}
+public class BudgetYearDto
+{
+    public int Id { get; set; }
+    public int Year { get; set; }
 }

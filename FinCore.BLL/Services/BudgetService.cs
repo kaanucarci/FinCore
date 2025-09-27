@@ -8,30 +8,30 @@ namespace FinCore.BLL.Services;
 
 public class BudgetService(
     IRepository<Budget> budgetRepo,
-    IRepository<Expense> expenseRepo,
-    IRepository<Saving> savingRepo
+    IRepository<Expense> expenseRepo
 ) : IBudgetService
 {
-    public async Task<List<Budget>> GetAllAsync()
+    public async Task<List<Budget>> GetAllAsync(int year)
         => (await budgetRepo.GetAllAsync())
+            .Where(b => b.Year == year)
             .OrderBy(b => b.Month)
             .ToList();
 
     public async Task<Budget?> GetByIdAsync(int id)
         => await budgetRepo.GetByIdAsync(id);
 
-    public async Task<BudgetInfoDto> GetInfoByIdAsync(int id)
+    public async Task<BudgetInfoDto> GetInfoByIdAsync(int id, int budgetYear)
     {
         var budget = await budgetRepo.GetByIdAsync(id);
         if (budget is null)
             throw new Exception("Bütçe Bulunamadı!");
 
         var expenseAmount = await expenseRepo.Query()
-            .Where(b => b.BudgetId == id)
+            .Where(b => b.BudgetId == id && b.Budget.Year == budgetYear && b.ExpenseType == ExpenseType.Expense)
             .SumAsync(b => b.Amount);
 
-        var savingAmount = await savingRepo.Query()
-            .Where(b => b.BudgetId == id)
+        var savingAmount = await expenseRepo.Query()
+            .Where(b => b.BudgetId == id && b.Budget.Year == budgetYear && b.ExpenseType == ExpenseType.Saving)
             .SumAsync(b => b.Amount);
 
 
@@ -50,12 +50,12 @@ public class BudgetService(
     public async Task AddAsync(Budget budget)
     {
         if (budget.Year < DateTime.Now.Year)
-            throw new ArgumentException("Gecmis yıl bütçe ekleyemezsiniz!");
+            throw new ArgumentException("Geçmiş yıl bütçe ekleyemezsiniz!");
 
         if (budget.Month < 1 || budget.Month > 12)
-            throw new ArgumentException("Ay değeri 1-12 arasinda olmalidir!");
+            throw new ArgumentException("Ay değeri 1-12 arasinda olmalıdır!");
 
-        if (budget.TotalAmount <= 0)
+        if (budget.TotalAmount < 0)
             throw new ArgumentException("Bütce pozitif bir sayı olmalıdır!");
 
         if (await ExistsAsync(budget.Year, budget.Month))
@@ -81,11 +81,11 @@ public class BudgetService(
             throw new ArgumentException("Aynı ay ve yıl için yalnızca bir bütçe kaydedilebilir!");
 
         var expenseAmount = await expenseRepo.Query()
-            .Where(b => b.BudgetId == budgetId)
+            .Where(b => b.BudgetId == budgetId && b.ExpenseType == ExpenseType.Expense)
             .SumAsync(b => b.Amount);
 
-        var savingAmount = await savingRepo.Query()
-            .Where(b => b.BudgetId == budgetId)
+        var savingAmount = await expenseRepo.Query()
+            .Where(b => b.BudgetId == budgetId && b.ExpenseType == ExpenseType.Saving)
             .SumAsync(b => b.Amount);
 
         var totalExpense = expenseAmount + savingAmount;
@@ -115,105 +115,64 @@ public class BudgetService(
         };
     }
 
-    public async Task<List<BudgetListResponseDto>> GetListAsync(int budgetId, BudgetListRequestDto budgetListDto, int page = 1)
+    public async Task<List<BudgetListResponseDto>> GetListAsync(int budgetId, BudgetListRequestDto budgetListDto,
+        int page = 1)
     {
-        var pageSize = 15;
+        var pageSize = 5;
         var entity = await budgetRepo.GetByIdAsync(budgetId);
 
         if (entity is null)
             throw new Exception("Bütçe Bulunamadı!");
-
-        List<ExpenseListDto> savingList = new();
+        
         List<ExpenseListDto> expenseList = new();
+        
+        //if (budgetListDto.ExpenseType is null || budgetListDto.ExpenseType != ExpenseType.Saving)
+        //{
+        var expenses = expenseRepo.Query()
+            .Where(b => b.BudgetId == budgetId && b.Budget.Year == budgetListDto.BudgetYear);
 
-        // --- SAVINGS ---
-        if (budgetListDto.ExpenseType is null || budgetListDto.ExpenseType != ExpenseType.Expense)
+        if (budgetListDto.StartDate is not null)
         {
-            var savings = savingRepo.Query()
-                .Where(b => b.BudgetId == budgetId && b.Budget.Year == budgetListDto.BudgetYear);
-
-            if (budgetListDto.StartDate is not null)
-            {
-                var startDate = BudgetHelper.ParseAndValidateSearchDate(budgetListDto.StartDate);
-                savings = savings.Where(b => b.CreatedDate.Date >= startDate.Date);
-            }
-
-            if (budgetListDto.EndDate is not null)
-            {
-                var endDate = BudgetHelper.ParseAndValidateSearchDate(budgetListDto.EndDate);
-                savings = savings.Where(b => b.CreatedDate.Date <= endDate.Date);
-            }
-
-            var totalSavings = await savings.CountAsync();
-
-            savingList = await savings
-                .OrderByDescending(s => s.CreatedDate)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .Select(s => new ExpenseListDto
-                {
-                    Id = s.Id,
-                    BudgetId = s.BudgetId,
-                    Amount = s.Amount,
-                    Description = s.Description,
-                    CreatedDate = s.CreatedDate,
-                    UpdatedDate = s.UpdatedDate != null ? s.UpdatedDate : null,
-                    ExpenseType = ExpenseType.Saving
-                })
-                .ToListAsync();
+            var startDate = BudgetHelper.ParseAndValidateSearchDate(budgetListDto.StartDate);
+            expenses = expenses.Where(b => b.CreatedDate.Date >= startDate.Date);
         }
 
-        // --- EXPENSES ---
-        if (budgetListDto.ExpenseType is null || budgetListDto.ExpenseType != ExpenseType.Saving)
+        if (budgetListDto.EndDate is not null)
         {
-            var expenses = expenseRepo.Query()
-                .Where(b => b.BudgetId == budgetId && b.Budget.Year == budgetListDto.BudgetYear);
-
-            if (budgetListDto.StartDate is not null)
-            {
-                var startDate = BudgetHelper.ParseAndValidateSearchDate(budgetListDto.StartDate);
-                expenses = expenses.Where(b => b.CreatedDate.Date >= startDate.Date);
-            }
-
-            if (budgetListDto.EndDate is not null)
-            {
-                var endDate = BudgetHelper.ParseAndValidateSearchDate(budgetListDto.EndDate);
-                expenses = expenses.Where(b => b.CreatedDate.Date <= endDate.Date);
-            }
-
-            var totalExpenses = await expenses.CountAsync();
-
-            expenseList = await expenses
-                .OrderByDescending(e => e.CreatedDate)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .Select(e => new ExpenseListDto
-                {
-                    Id = e.Id,
-                    BudgetId = e.BudgetId,
-                    Amount = e.Amount,
-                    Description = e.Description,
-                    CreatedDate = e.CreatedDate,
-                    UpdatedDate = e.UpdatedDate != null ? e.UpdatedDate : null,
-                    ExpenseType = ExpenseType.Expense
-                })
-                .ToListAsync();
+            var endDate = BudgetHelper.ParseAndValidateSearchDate(budgetListDto.EndDate);
+            expenses = expenses.Where(b => b.CreatedDate.Date <= endDate.Date);
         }
+
+        var totalExpenses = await expenses.CountAsync();
+
+        expenseList = await expenses
+            .OrderByDescending(e => e.CreatedDate)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(e => new ExpenseListDto
+            {
+                Id = e.Id,
+                BudgetId = e.BudgetId,
+                Amount = e.Amount,
+                Description = e.Description,
+                CreatedDate = e.CreatedDate,
+                UpdatedDate = e.UpdatedDate != null ? e.UpdatedDate : null,
+                ExpenseType = e.ExpenseType
+            })
+            .ToListAsync();
+        //}
 
         return new List<BudgetListResponseDto>
         {
             new BudgetListResponseDto
             {
-                TotalCount = savingList.Count + expenseList.Count,
+                TotalCount = totalExpenses,
                 Page = page,
-                PageSize = pageSize * 2,
-                Savings = savingList,
+                PageSize = pageSize,
                 Expenses = expenseList
             }
         };
     }
-
-
     public async Task Delete(Budget budget)
     {
         var item = await budgetRepo.GetByIdAsync(budget.Id);
@@ -230,5 +189,41 @@ public class BudgetService(
     {
         return await budgetRepo.Query()
             .AnyAsync(b => b.Year == year && b.Month == month);
+    }
+
+    public async Task<List<int>> GetYearsAsync()
+    {
+        var result = await budgetRepo.Query()
+            .Select(b => b.Year)
+            .Distinct()
+            .ToListAsync();
+
+        return result;
+    }
+
+    public async Task CreateYearAsync(int year)
+    {
+        var isExist = await budgetRepo.Query().AnyAsync(x => x.Year == year);
+        if (!isExist)
+        {
+           
+            for (int i = 1; i <= 12; i++)
+            {
+                var budget = new Budget
+                {
+                    Year = year,
+                    Month =  i,
+                    TotalAmount = 0,
+                    Amount = 0
+                };
+
+                await AddAsync(budget);
+            }
+            return;
+        }   
+        else
+        {
+            throw new Exception("Budget year already exists!");
+        }
     }
 }
