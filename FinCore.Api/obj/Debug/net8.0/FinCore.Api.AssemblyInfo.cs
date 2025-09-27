@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FinCore.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cba096eea660af212fe20139ae59235f8fc939fc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3452cccd862d8130227c90cc4c23c56a5986ddf5")]
 [assembly: System.Reflection.AssemblyProductAttribute("FinCore.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FinCore.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

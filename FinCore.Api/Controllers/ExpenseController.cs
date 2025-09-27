@@ -30,6 +30,13 @@ public class ExpenseController(IExpenseService expenseService, IMapper mapper, I
             ? NotFound()
             : Ok(mapper.Map<ExpenseDto.ExpenseReadDto>(expense));
     }
+    
+    [HttpGet("search")]
+    public async Task<List<Expense>> Search([FromQuery] string key)
+    {
+        var expenses = await expenseService.SearchAsync(key);
+        return expenses ?? new List<Expense>();
+    }
 
     [HttpPost]
     public async Task<ActionResult<ExpenseDto.ExpenseReadDto>> Create(ExpenseDto.ExpenseCreateDto dto)
