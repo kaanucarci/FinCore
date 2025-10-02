@@ -1,5 +1,6 @@
 using FinCore.BLL.Interfaces;
 using FinCore.Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinCore.BLL.Services;
 
@@ -54,6 +55,15 @@ public class ExpenseService :
         existing.ExpenseType = expense.ExpenseType;
         existing.UpdatedDate = DateTime.UtcNow;
         await _repo.SaveChangesAsync();
+    }
+
+    public async Task<List<Expense>> SearchAsync(string key)
+    {
+        List<Expense> result =  await _repo.Query()
+            .Where(e => e.Description.Contains(key))
+            .ToListAsync();
+        
+        return result;
     }
 
     public async Task DeleteAsync(int expenseId)

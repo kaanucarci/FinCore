@@ -69,37 +69,9 @@ namespace FinCore.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Savings",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    BudgetId = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Savings", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Savings_Budgets_BudgetId",
-                        column: x => x.BudgetId,
-                        principalTable: "Budgets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Expenses_BudgetId",
                 table: "Expenses",
-                column: "BudgetId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Savings_BudgetId",
-                table: "Savings",
                 column: "BudgetId");
 
             migrationBuilder.CreateIndex(
@@ -114,10 +86,7 @@ namespace FinCore.DAL.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Expenses");
-
-            migrationBuilder.DropTable(
-                name: "Savings");
-
+            
             migrationBuilder.DropTable(
                 name: "Users");
 

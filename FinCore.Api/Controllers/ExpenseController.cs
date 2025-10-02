@@ -1,9 +1,11 @@
 using AutoMapper;
+using FinCore.Api.Hubs;
 using FinCore.Entities.DTOs;
 using FinCore.BLL.Interfaces;
 using FinCore.Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace FinCore.Api.Controllers;
 
@@ -11,7 +13,7 @@ namespace FinCore.Api.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class ExpenseController(IExpenseService expenseService, IMapper mapper, IBudgetService budgetService) : ControllerBase
+public class ExpenseController(IExpenseService expenseService, IMapper mapper, IBudgetService budgetService, IHubContext<FinanceHub> hubContext) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<ExpenseDto.ExpenseCreateDto>> GetAll(int budgetId)
@@ -45,6 +47,14 @@ public class ExpenseController(IExpenseService expenseService, IMapper mapper, I
         await expenseService.AddAsync(entity);
         
         var read = mapper.Map<ExpenseDto.ExpenseReadDto>(entity);
+        var userId = User.FindFirst("sub")?.Value;
+
+        if (!string.IsNullOrEmpty(userId))
+        {
+            await hubContext.Clients.Group($"user-{userId}")
+                .SendAsync("ExpenseCreated", read);
+        }
+        
         return CreatedAtAction(nameof(Get), new { expenseId = read.Id }, read);
     }
     

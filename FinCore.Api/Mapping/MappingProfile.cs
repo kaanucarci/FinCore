@@ -19,10 +19,5 @@ public class MappingProfile : Profile
         CreateMap<ExpenseDto.ExpenseCreateDto, Expense>();
         CreateMap<ExpenseDto.ExpenseUpdateDto, Expense>();
         CreateMap<Expense, ExpenseDto.ExpenseReadDto>();
-
-        // Saving
-        CreateMap<SavingDto.SavingCreateDto, Saving>();
-        CreateMap<SavingDto.SavingUpdateDto, Saving>();
-        CreateMap<Saving, SavingDto.SavingReadDto>();
     }
 }

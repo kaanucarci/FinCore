@@ -10,4 +10,5 @@ public interface IExpenseService
     Task AddAsync(Expense expense);
     Task UpdateAsync(int expenseId, Expense expense);
     Task DeleteAsync(int expenseId);
+    Task<List<Expense>> SearchAsync(string key);
 }
