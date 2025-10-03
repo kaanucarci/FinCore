@@ -47,14 +47,7 @@ public class ExpenseController(IExpenseService expenseService, IMapper mapper, I
         await expenseService.AddAsync(entity);
         
         var read = mapper.Map<ExpenseDto.ExpenseReadDto>(entity);
-        var userId = User.FindFirst("sub")?.Value;
-
-        if (!string.IsNullOrEmpty(userId))
-        {
-            await hubContext.Clients.Group($"user-{userId}")
-                .SendAsync("ExpenseCreated", read);
-        }
-        
+        await hubContext.Clients.All.SendAsync("ExpenseCreated", read);
         return CreatedAtAction(nameof(Get), new { expenseId = read.Id }, read);
     }
     
@@ -69,6 +62,7 @@ public class ExpenseController(IExpenseService expenseService, IMapper mapper, I
             return NotFound();
 
         var read = mapper.Map<ExpenseDto.ExpenseReadDto>(updated);
+        await hubContext.Clients.All.SendAsync("ExpenseUpdated", read);
         return Ok(read);
     }
 
@@ -76,7 +70,9 @@ public class ExpenseController(IExpenseService expenseService, IMapper mapper, I
     [HttpDelete("{expenseId}")]
     public async Task<OkObjectResult> Delete([FromRoute] int expenseId)
     {
+        var expense = await expenseService.GetByIdAsync(expenseId);
         await expenseService.DeleteAsync(expenseId);
-        return Ok("Deleted Succesfully");
+        await hubContext.Clients.All.SendAsync("ExpenseDeleted", expense);
+        return Ok(expense);
     }
 }
