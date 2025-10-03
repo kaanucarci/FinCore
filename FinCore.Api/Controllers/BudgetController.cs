@@ -1,16 +1,18 @@
 using AutoMapper;
+using FinCore.Api.Hubs;
 using FinCore.Entities.DTOs;
 using FinCore.BLL.Interfaces;
 using FinCore.Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace FinCore.Api.Controllers;
 
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class BudgetController(IBudgetService service, IMapper mapper) : ControllerBase
+public class BudgetController(IBudgetService service, IMapper mapper, IHubContext<FinanceHub> hubContext) : ControllerBase
 {
     [HttpGet("get/{year}")]
     public async Task<ActionResult<BudgetDto.BudgetReadDto>> GetAll(int year)
@@ -41,8 +43,9 @@ public class BudgetController(IBudgetService service, IMapper mapper) : Controll
     {
         var entity = mapper.Map<Budget>(dto);
         var updatedEntity = await service.UpdateAsync(entity, budgetId);
-
+    
         var read = mapper.Map<BudgetInfoDto>(updatedEntity);
+        await hubContext.Clients.All.SendAsync("BudgetUpdated", read);
         return Ok(read); 
     }
     
