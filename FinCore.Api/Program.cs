@@ -95,20 +95,24 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend", policy =>
+    options.AddPolicy("CorsPolicy", policy =>
     {
         policy
-            .WithOrigins("http://localhost:3000")  
+            .WithOrigins(
+                "https://finjs.vercel.app", 
+                "http://localhost:3000"
+            )
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .AllowCredentials();  
+            .AllowCredentials();
     });
 });
 
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-app.UseCors("AllowFrontend");
+app.UseRouting();
+app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 

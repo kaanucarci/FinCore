@@ -208,3 +208,9 @@
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/publish/publish/publish/publish/FinCore.Api.deps.json
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/publish/publish/publish/publish/FinCore.Api.runtimeconfig.json
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/publish/publish/publish/publish/FinCore.Api.staticwebassets.endpoints.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/publish/publish/publish/publish/publish/web.config
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/publish/publish/publish/publish/publish/appsettings.Development.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/publish/publish/publish/publish/publish/appsettings.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/publish/publish/publish/publish/publish/FinCore.Api.deps.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/publish/publish/publish/publish/publish/FinCore.Api.runtimeconfig.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/publish/publish/publish/publish/publish/FinCore.Api.staticwebassets.endpoints.json
