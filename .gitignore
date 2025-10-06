@@ -1,0 +1,59 @@
+# ==========================================
+# 🧠 FinCore .gitignore
+# (Rider + VS + Mac + .NET 8 güvenli yapı)
+# ==========================================
+
+# -------------------------------
+# IDE / Editor Files
+# -------------------------------
+.idea/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+/.idea.FinCore.iml
+/projectSettingsUpdater.xml
+/contentModel.xml
+/modules.xml
+/workspace.xml
+/shelf/
+httpRequests/
+dataSources/
+dataSources.local.xml
+
+# -------------------------------
+# Build Artifacts
+# -------------------------------
+bin/
+obj/
+publish/
+FinCore.Api/bin/
+FinCore.Api/obj/
+FinCore.Api/publish/
+
+# -------------------------------
+# Configuration Files
+# -------------------------------
+appsettings.json
+appsettings.*.json
+secrets.json
+
+# -------------------------------
+# Logs / Backups
+# -------------------------------
+*.log
+*.bak
+*.dbmdl
+*.tmp
+
+# -------------------------------
+# OS / System Files
+# -------------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------------
+# Other
+# -------------------------------
+/node_modules/
