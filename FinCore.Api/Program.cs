@@ -105,7 +105,8 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins(
                 "https://finjs.vercel.app", 
-                "http://localhost:3000"
+                "http://localhost:3000",
+                "capacitor://localhost"
             )
             .AllowAnyHeader()
             .AllowAnyMethod()

@@ -214,3 +214,11 @@
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/publish/publish/publish/publish/publish/FinCore.Api.deps.json
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/publish/publish/publish/publish/publish/FinCore.Api.runtimeconfig.json
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/publish/publish/publish/publish/publish/FinCore.Api.staticwebassets.endpoints.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/BCrypt.Net-Next.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/Microsoft.Extensions.Configuration.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/Microsoft.Extensions.Configuration.Binder.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/Microsoft.Extensions.Configuration.FileExtensions.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/Microsoft.Extensions.Configuration.Json.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/Microsoft.Extensions.FileProviders.Abstractions.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/Microsoft.Extensions.FileProviders.Physical.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/Microsoft.Extensions.FileSystemGlobbing.dll

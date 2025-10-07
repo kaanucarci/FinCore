@@ -38,6 +38,7 @@
 /Users/kaanucarci/Desktop/c#/FinCore/publish/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Azure.Core.dll
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Azure.Identity.dll
+/Users/kaanucarci/Desktop/c#/FinCore/publish/BCrypt.Net-Next.dll
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.AspNetCore.OpenApi.dll
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Bcl.AsyncInterfaces.dll
@@ -48,10 +49,17 @@
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.EntityFrameworkCore.SqlServer.dll
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.Caching.Abstractions.dll
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.Caching.Memory.dll
+/Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.Configuration.dll
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.Configuration.Abstractions.dll
+/Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.Configuration.Binder.dll
+/Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.Configuration.FileExtensions.dll
+/Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.Configuration.Json.dll
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.DependencyInjection.dll
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.DependencyInjection.Abstractions.dll
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.Diagnostics.Abstractions.dll
+/Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.FileProviders.Abstractions.dll
+/Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.FileProviders.Physical.dll
+/Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.FileSystemGlobbing.dll
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.Hosting.Abstractions.dll
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.Logging.dll
 /Users/kaanucarci/Desktop/c#/FinCore/publish/Microsoft.Extensions.Logging.Abstractions.dll

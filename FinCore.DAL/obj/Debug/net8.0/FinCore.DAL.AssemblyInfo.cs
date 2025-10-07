@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FinCore.DAL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5eea3bfedd602cf9ba846f4d65ef6647b7aed381")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb6d9f946f2a2b25032b21229fe629138b9d7549")]
 [assembly: System.Reflection.AssemblyProductAttribute("FinCore.DAL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FinCore.DAL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
