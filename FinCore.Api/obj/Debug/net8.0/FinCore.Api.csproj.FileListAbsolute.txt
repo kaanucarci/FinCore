@@ -221,3 +221,4 @@
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/Microsoft.Extensions.FileProviders.Abstractions.dll
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/Microsoft.Extensions.FileProviders.Physical.dll
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/Microsoft.Extensions.FileSystemGlobbing.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Debug/net8.0/BCrypt.Net-Next.dll
