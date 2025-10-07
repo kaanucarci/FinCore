@@ -1,4 +1,5 @@
 using FinCore.BLL.Interfaces;
+using FinCore.Entities.Interfaces;
 using FinCore.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,11 +10,13 @@ public class ExpenseService :
 {
     private readonly IRepository<Expense> _repo;
     private readonly IRepository<Budget> _budgetRepo;
+    private readonly IUserContext _userContext;
 
-    public ExpenseService(IRepository<Expense> repo, IRepository<Budget> budgetRepo) : base(repo, budgetRepo)
+    public ExpenseService(IRepository<Expense> repo, IRepository<Budget> budgetRepo, IUserContext userContext) : base(repo, budgetRepo)
     {
         _repo = repo;
         _budgetRepo = budgetRepo;
+        _userContext = userContext;
     }
 
     public async Task<List<Expense>> GetAllAsync(int budgetId)
@@ -38,18 +41,18 @@ public class ExpenseService :
         var budget = await _budgetRepo.GetByIdAsync(expense.BudgetId);
         if (budget == null)
             throw new Exception("Budget not found");
-        
+
         var existing = await _repo.GetByIdAsync(expenseId);
         if (existing == null)
             throw new Exception("Expense not found");
 
         if (budget.Amount < expense.Amount)
             throw new Exception("Budget amount is not enough");
-        
+
         var diffrance = existing.Amount - expense.Amount;
         budget.Amount += diffrance;
         await _budgetRepo.SaveChangesAsync();
-        
+
         existing.Amount = expense.Amount;
         existing.Description = expense.Description;
         existing.ExpenseType = expense.ExpenseType;
@@ -59,10 +62,14 @@ public class ExpenseService :
 
     public async Task<List<Expense>> SearchAsync(string key)
     {
-        List<Expense> result =  await _repo.Query()
-            .Where(e => e.Description.Contains(key))
+        List<Expense> result = await _repo.Query()
+            .Where(e =>
+                e.Description != null &&
+                e.Description.Contains(key) &&
+                e.Budget.UserId == _userContext.UserId
+            )
             .ToListAsync();
-        
+
         return result;
     }
 
@@ -75,7 +82,7 @@ public class ExpenseService :
             var budget = await _budgetRepo.GetByIdAsync(entity.BudgetId);
             budget.Amount += entity.Amount;
             await _budgetRepo.SaveChangesAsync();
-            
+
             _repo.Delete(entity);
             await _repo.SaveChangesAsync();
         }

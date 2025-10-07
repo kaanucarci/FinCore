@@ -23,7 +23,7 @@ public class AuthService(AppDbContext context, IConfiguration config) : IAuthSer
         var claims = new[]
         {
             new Claim(ClaimTypes.Name, user.UserName),
-            new Claim("UserId", user.Id.ToString())
+            new Claim("userId", user.Id.ToString())
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"] ?? string.Empty));

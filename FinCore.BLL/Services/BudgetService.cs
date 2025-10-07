@@ -22,24 +22,23 @@ public class BudgetService(
     public async Task<Budget?> GetByIdAsync(int id)
     {
         var entity = budgetRepo.Query()
-            .Where(x => x.Id == id && x.UserId == userContext.UserId)
+            .Where(x => x.UserId == userContext.UserId && x.Id == id)
             .FirstOrDefaultAsync();
-
         return await entity;
     }
 
     public async Task<BudgetInfoDto> GetInfoByIdAsync(int id, int budgetYear)
     {
-        var budget = await budgetRepo.GetByIdAsync(id);
+        var budget = await GetByIdAsync(id);
         if (budget is null)
             throw new Exception("Bütçe Bulunamadı!");
 
         var expenseAmount = await expenseRepo.Query()
-            .Where(b => b.BudgetId == id && b.Budget.Year == budgetYear && b.ExpenseType == ExpenseType.Expense)
+            .Where(b => b.BudgetId == id)
             .SumAsync(b => b.Amount);
 
         var savingAmount = await expenseRepo.Query()
-            .Where(b => b.BudgetId == id && b.Budget.Year == budgetYear && b.ExpenseType == ExpenseType.Saving)
+            .Where(b => b.BudgetId == id)
             .SumAsync(b => b.Amount);
 
 
