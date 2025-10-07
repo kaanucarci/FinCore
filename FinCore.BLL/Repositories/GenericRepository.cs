@@ -8,6 +8,8 @@ namespace FinCore.BLL.Repositories;
 public class GenericRepository<T> : IRepository<T> where T : BaseEntity
 {
     private readonly AppDbContext _ctx;
+    public AppDbContext Context => _ctx;
+
     public GenericRepository(AppDbContext ctx) => _ctx = ctx;
 
 
@@ -16,7 +18,7 @@ public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     public async Task<T?> GetByIdAsync(int id) => await _ctx.Set<T>().FindAsync(id);
     
 
-    public async Task AddAsync(T item) => await _ctx.Set<T>().AddAsync(item);
+    public async Task AddAsync(T item, bool? saveImmediately = true) => await _ctx.Set<T>().AddAsync(item);
 
     public async Task AddRangeAsync(IEnumerable<T> items) => await _ctx.Set<T>().AddRangeAsync(items);
 

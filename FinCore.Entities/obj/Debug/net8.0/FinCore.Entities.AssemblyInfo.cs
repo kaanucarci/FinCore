@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FinCore.Entities")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f2dfa5471eb975a6b7023bf9ad44f30fc33b3afb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5eea3bfedd602cf9ba846f4d65ef6647b7aed381")]
 [assembly: System.Reflection.AssemblyProductAttribute("FinCore.Entities")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FinCore.Entities")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

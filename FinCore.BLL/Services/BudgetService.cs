@@ -15,12 +15,13 @@ public class BudgetService(
 {
     public async Task<List<Budget>> GetAllAsync(int year)
         => (await budgetRepo.GetAllAsync())
-            .Where(b => b.Year == year)
+            .Where(b => b.UserId == userContext.UserId && b.Year == year)
             .OrderBy(b => b.Month)
             .ToList();
 
     public async Task<Budget?> GetByIdAsync(int id)
     {
+        Console.WriteLine("UserId: " + userContext.UserId);
         var entity = budgetRepo.Query()
             .Where(x => x.UserId == userContext.UserId && x.Id == id)
             .FirstOrDefaultAsync();
@@ -67,9 +68,9 @@ public class BudgetService(
 
         if (await ExistsAsync(budget.Year, budget.Month))
             throw new ArgumentException("Aynı ay ve yıl için yalnızca bir bütçe kaydedilebilir!");
-        
+
         budget.UserId = userContext.UserId;
-        
+
         await budgetRepo.AddAsync(budget);
         await budgetRepo.SaveChangesAsync();
     }
@@ -128,13 +129,13 @@ public class BudgetService(
         int page = 1)
     {
         var pageSize = 5;
-        var entity = await budgetRepo.GetByIdAsync(budgetId);
+        var entity = await GetByIdAsync(budgetId);
 
         if (entity is null)
             throw new Exception("Bütçe Bulunamadı!");
-        
+
         List<ExpenseListDto> expenseList = new();
-        
+
         //if (budgetListDto.ExpenseType is null || budgetListDto.ExpenseType != ExpenseType.Saving)
         //{
         var expenses = expenseRepo.Query()
@@ -182,6 +183,7 @@ public class BudgetService(
             }
         };
     }
+
     public async Task Delete(Budget budget)
     {
         var item = await budgetRepo.GetByIdAsync(budget.Id);
@@ -197,12 +199,13 @@ public class BudgetService(
     public async Task<bool> ExistsAsync(int year, int month)
     {
         return await budgetRepo.Query()
-            .AnyAsync(b => b.Year == year && b.Month == month);
+            .AnyAsync(b => b.UserId == userContext.UserId && b.Year == year && b.Month == month);
     }
 
     public async Task<List<int>> GetYearsAsync()
     {
         var result = await budgetRepo.Query()
+            .Where(x => x.UserId == userContext.UserId)
             .Select(b => b.Year)
             .Distinct()
             .ToListAsync();
@@ -210,29 +213,33 @@ public class BudgetService(
         return result;
     }
 
-    public async Task CreateYearAsync(int year)
+    public async Task CreateYearAsync(int year, int? userId = null)
     {
-        var isExist = await budgetRepo.Query().AnyAsync(x => x.Year == year);
-        if (!isExist)
-        {
-           
-            for (int i = 1; i <= 12; i++)
-            {
-                var budget = new Budget
-                {
-                    Year = year,
-                    Month =  i,
-                    TotalAmount = 0,
-                    Amount = 0
-                };
+        var user = userId ?? userContext?.UserId;
+        if (user is null || user == 0)
+            throw new Exception("User not found!");
 
-                await AddAsync(budget);
-            }
-            return;
-        }   
-        else
-        {
+        Console.WriteLine("UserId: " + user.Value);
+
+        var isExist = await budgetRepo.Query().AnyAsync(x => x.UserId == user && x.Year == year);
+        if (isExist)
             throw new Exception("Budget year already exists!");
+
+        for (int i = 1; i <= 12; i++)
+        {
+            var budget = new Budget
+            {
+                Year = year,
+                Month = i,
+                TotalAmount = 0,
+                Amount = 0,
+                UserId = user.Value
+            };
+
+            await budgetRepo.AddAsync(budget, saveImmediately: false);
         }
+
+        await budgetRepo.SaveChangesAsync();
     }
+
 }

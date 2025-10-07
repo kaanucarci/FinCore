@@ -13,5 +13,5 @@ public interface IBudgetService
        Task<List<BudgetListResponseDto>> GetListAsync(int id, BudgetListRequestDto budgetListDto, int page = 1);
        Task Delete(Budget budget);
        Task<List<int>> GetYearsAsync();
-       Task CreateYearAsync(int year);
+       Task CreateYearAsync(int year, int? userId = null);
 }
