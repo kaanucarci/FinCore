@@ -45,10 +45,15 @@ namespace FinCore.DAL.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Budgets");
                 });
@@ -84,36 +89,6 @@ namespace FinCore.DAL.Migrations
                     b.HasIndex("BudgetId");
 
                     b.ToTable("Expenses");
-                });
-
-            modelBuilder.Entity("FinCore.Entities.Models.Saving", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("BudgetId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BudgetId");
-
-                    b.ToTable("Savings");
                 });
 
             modelBuilder.Entity("FinCore.Entities.Models.User", b =>
@@ -154,6 +129,17 @@ namespace FinCore.DAL.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("FinCore.Entities.Models.Budget", b =>
+                {
+                    b.HasOne("FinCore.Entities.Models.User", "User")
+                        .WithMany("Budgets")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("FinCore.Entities.Models.Expense", b =>
                 {
                     b.HasOne("FinCore.Entities.Models.Budget", "Budget")
@@ -165,22 +151,14 @@ namespace FinCore.DAL.Migrations
                     b.Navigation("Budget");
                 });
 
-            modelBuilder.Entity("FinCore.Entities.Models.Saving", b =>
-                {
-                    b.HasOne("FinCore.Entities.Models.Budget", "Budget")
-                        .WithMany("Savings")
-                        .HasForeignKey("BudgetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Budget");
-                });
-
             modelBuilder.Entity("FinCore.Entities.Models.Budget", b =>
                 {
                     b.Navigation("Expenses");
+                });
 
-                    b.Navigation("Savings");
+            modelBuilder.Entity("FinCore.Entities.Models.User", b =>
+                {
+                    b.Navigation("Budgets");
                 });
 #pragma warning restore 612, 618
         }

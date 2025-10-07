@@ -12,4 +12,7 @@ public class Budget : BaseEntity
     public decimal Amount { get; set; }
 
     public virtual ICollection<Expense>? Expenses { get; set; }
+
+    public int UserId { get; set; }
+    public virtual User User { get; set; }
 }

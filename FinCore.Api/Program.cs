@@ -10,7 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.SignalR;
-using FinCore.Api.Hubs;            
+using FinCore.Api.Hubs;
+using FinCore.Entities.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,12 +19,13 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         sqlOptions => sqlOptions.EnableRetryOnFailure(
-            maxRetryCount: 5,
+            maxRetryCount: 5,                     
             maxRetryDelay: TimeSpan.FromSeconds(10),
             errorNumbersToAdd: null
         )
     )
 );
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -35,6 +37,9 @@ builder.Services.AddScoped<IBudgetService, BudgetService>();
 builder.Services.AddScoped<IExpenseService, ExpenseService>();   
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IUserContext, UserContext>();
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

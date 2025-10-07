@@ -1,6 +1,7 @@
 using FinCore.BLL.Helpers;
 using FinCore.BLL.Interfaces;
 using FinCore.Entities.DTOs;
+using FinCore.Entities.Interfaces;
 using FinCore.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +9,8 @@ namespace FinCore.BLL.Services;
 
 public class BudgetService(
     IRepository<Budget> budgetRepo,
-    IRepository<Expense> expenseRepo
+    IRepository<Expense> expenseRepo,
+    IUserContext userContext
 ) : IBudgetService
 {
     public async Task<List<Budget>> GetAllAsync(int year)
@@ -18,7 +20,13 @@ public class BudgetService(
             .ToList();
 
     public async Task<Budget?> GetByIdAsync(int id)
-        => await budgetRepo.GetByIdAsync(id);
+    {
+        var entity = budgetRepo.Query()
+            .Where(x => x.Id == id && x.UserId == userContext.UserId)
+            .FirstOrDefaultAsync();
+
+        return await entity;
+    }
 
     public async Task<BudgetInfoDto> GetInfoByIdAsync(int id, int budgetYear)
     {
@@ -60,7 +68,9 @@ public class BudgetService(
 
         if (await ExistsAsync(budget.Year, budget.Month))
             throw new ArgumentException("Aynı ay ve yıl için yalnızca bir bütçe kaydedilebilir!");
-
+        
+        budget.UserId = userContext.UserId;
+        
         await budgetRepo.AddAsync(budget);
         await budgetRepo.SaveChangesAsync();
     }

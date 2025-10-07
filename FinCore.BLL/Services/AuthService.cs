@@ -15,7 +15,7 @@ public class AuthService(AppDbContext context, IConfiguration config) : IAuthSer
     {
         var users = await context.Users.ToListAsync();
         var user = users.FirstOrDefault(u =>
-            string.Equals(u.UserName, username, StringComparison.Ordinal)); // case-sensitive
+            string.Equals(u.UserName, username, StringComparison.Ordinal));
 
         if (user == null || user.Password != password)
             throw new Exception("Invalid username or password");
