@@ -37,6 +37,10 @@ az webapp deployment source config-zip \
   --name $APP_NAME \
   --src $ZIP_FILE
 
-# 6️⃣ Logları izle
-echo "📡 Deploy tamamlandı. Loglar akmaya başlıyor..."
-az webapp log tail --name $APP_NAME --resource-group $RESOURCE_GROUP
+# 6️⃣ Deploy tamamlandıktan sonra zip'i sil
+if [ -f "$ZIP_FILE" ]; then
+  echo "🧽 Deploy tamamlandı. Zip dosyası siliniyor..."
+  rm "$ZIP_FILE"
+fi
+
+echo "✅ Deploy işlemi başarıyla tamamlandı!"

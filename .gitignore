@@ -57,3 +57,4 @@ Thumbs.db
 # Other
 # -------------------------------
 /node_modules/
+deploy.sh

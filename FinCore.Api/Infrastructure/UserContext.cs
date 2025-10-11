@@ -22,7 +22,7 @@ namespace FinCore.Api.Infrastructure
             }
         }
 
-        public string UserName =>
+        public string Email =>
             _contextAccessor.HttpContext?.User?.Identity?.Name ?? string.Empty;
 
         public bool IsAuthenticated =>

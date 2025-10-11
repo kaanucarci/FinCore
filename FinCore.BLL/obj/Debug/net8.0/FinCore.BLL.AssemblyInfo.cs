@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FinCore.BLL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb6d9f946f2a2b25032b21229fe629138b9d7549")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+12d5e566de167ee23cc3fe1c3c9af73738461871")]
 [assembly: System.Reflection.AssemblyProductAttribute("FinCore.BLL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FinCore.BLL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

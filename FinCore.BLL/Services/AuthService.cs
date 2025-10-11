@@ -14,20 +14,20 @@ namespace FinCore.BLL.Services;
 
 public class AuthService(AppDbContext context, IConfiguration config, IRepository<User> userRepo, IBudgetService budgetService) : IAuthService
 {
-    public async Task<string> Authenticate(string username, string password)
+    public async Task<string> Authenticate(string email, string password)
     {
         var users = await context.Users.ToListAsync();
         
         var user = users.FirstOrDefault(u =>
-            string.Equals(u.UserName, username, StringComparison.Ordinal));
+            string.Equals(u.Email, email, StringComparison.Ordinal));
 
         
         if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
-            throw new Exception("Invalid username or password");
+            throw new Exception("Invalid email or password");
 
         var claims = new[]
         {
-            new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(ClaimTypes.Name, user.Email),
             new Claim("userId", user.Id.ToString())
         };
 
@@ -48,7 +48,7 @@ public class AuthService(AppDbContext context, IConfiguration config, IRepositor
     public async Task<string> Register(RegisterDto dto)
     {
         bool validateUser = await userRepo.Query()
-            .AnyAsync(x => x.UserName == dto.UserName);
+            .AnyAsync(x => x.Email == dto.Email);
 
         if (validateUser)
             throw new Exception("User alreay exist!");
@@ -59,7 +59,7 @@ public class AuthService(AppDbContext context, IConfiguration config, IRepositor
         {
             Name = dto.Name,
             Surname = dto.Surname,
-            UserName = dto.UserName,
+            Email = dto.Email,
             Password = hashedPassword
         };
 
@@ -67,7 +67,7 @@ public class AuthService(AppDbContext context, IConfiguration config, IRepositor
         await userRepo.SaveChangesAsync();
         await budgetService.CreateYearAsync(DateTime.Now.Year, user.Id);
 
-        var token = await Authenticate(dto.UserName, dto.Password);
+        var token = await Authenticate(dto.Email, dto.Password);
         return token;
     }
 }

@@ -16,7 +16,7 @@ namespace FinCore.DAL.Context
             base.OnModelCreating(modelBuilder);
             
             modelBuilder.Entity<User>()
-                .HasIndex(u => u.UserName)
+                .HasIndex(u => u.Email)
                 .IsUnique();
             
             modelBuilder.Entity<Expense>()

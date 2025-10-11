@@ -35,11 +35,11 @@ public class BudgetService(
             throw new Exception("Bütçe Bulunamadı!");
 
         var expenseAmount = await expenseRepo.Query()
-            .Where(b => b.BudgetId == id)
+            .Where(b => b.BudgetId == id && b.ExpenseType == ExpenseType.Expense)
             .SumAsync(b => b.Amount);
 
         var savingAmount = await expenseRepo.Query()
-            .Where(b => b.BudgetId == id)
+            .Where(b => b.BudgetId == id && b.ExpenseType == ExpenseType.Saving)
             .SumAsync(b => b.Amount);
 
 
