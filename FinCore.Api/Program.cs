@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.SignalR;
 using FinCore.Api.Hubs;
 using FinCore.Entities.Interfaces;
+using FinCore.BLL.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +40,8 @@ builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserContext, UserContext>();
-
+builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
+builder.Services.AddScoped<IMailService, MailService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -63,6 +65,11 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+
+var templatePath = Path.Combine(builder.Environment.ContentRootPath, "Templates");
+builder.Services.AddSingleton<IMailTemplateRenderer>(new FileMailTemplateRenderer(templatePath));
+
+
 
 builder.Services.AddSwaggerGen(options =>
 {

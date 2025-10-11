@@ -1,8 +1,6 @@
 using FinCore.BLL.Interfaces;
 using FinCore.Entities.DTOs;
-using FinCore.Entities.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinCore.Api.Controllers;
@@ -25,5 +23,29 @@ public class AuthController(IAuthService service) : ControllerBase
     {
         var token = await service.Register(dto);
         return Ok(new TokenDto { Token = token });
+    } 
+    
+    [AllowAnonymous]
+    [HttpPost("send-reset-password-code")]
+    public async Task<ActionResult> SendResetPasswordCode(List<string> email)
+    {
+        var status = await service.SendResetPasswordCodeAsync(email.First());
+
+        if (status)
+            return Ok();
+
+        return BadRequest();
+    } 
+    
+    [AllowAnonymous]
+    [HttpPost("verify-reset-password-code")]
+    public async Task<ActionResult> VerifyResetPasswordCode(List<string> email, string code)
+    {
+        var status = await service.VerifyResetPasswordCode(code, email.First());
+
+        if (status)
+            return Ok();
+
+        return BadRequest();
     } 
 }
