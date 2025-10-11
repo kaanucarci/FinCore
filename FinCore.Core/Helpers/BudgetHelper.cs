@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace FinCore.BLL.Helpers;
+namespace FinCore.Core.Helpers;
 
 public class BudgetHelper
 {

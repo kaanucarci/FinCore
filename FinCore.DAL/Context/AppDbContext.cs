@@ -10,6 +10,9 @@ namespace FinCore.DAL.Context
         public DbSet<User> Users    => Set<User>();
         public DbSet<Budget> Budgets  => Set<Budget>();
         public DbSet<Expense> Expenses => Set<Expense>();
+        
+        public DbSet<UserResetCode> UserResetCodes { get; set; } = default!;
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -7,4 +7,6 @@ public interface IAuthService
 {
     Task<string> Authenticate(string username, string password);
     Task<string> Register(RegisterDto dto);
+    Task<bool> SendResetPasswordCodeAsync(string email);
+    Task<bool> VerifyResetPasswordCode(string code, string email);
 }

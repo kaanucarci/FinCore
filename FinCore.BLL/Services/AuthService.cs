@@ -1,8 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Runtime.InteropServices.JavaScript;
 using System.Security.Claims;
 using System.Text;
 using FinCore.BLL.Interfaces;
+using FinCore.Core.Helpers;
 using FinCore.DAL.Context;
 using FinCore.Entities.DTOs;
 using FinCore.Entities.Models;
@@ -12,7 +12,15 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace FinCore.BLL.Services;
 
-public class AuthService(AppDbContext context, IConfiguration config, IRepository<User> userRepo, IBudgetService budgetService) : IAuthService
+public class AuthService(
+    AppDbContext context, 
+    IConfiguration config, 
+    IRepository<User> userRepo, 
+    IRepository<UserResetCode> userResetRepo, 
+    IBudgetService budgetService,
+    IMailTemplateRenderer templateRenderer,
+    IMailService mailService
+    ) : IAuthService
 {
     public async Task<string> Authenticate(string email, string password)
     {
@@ -69,5 +77,67 @@ public class AuthService(AppDbContext context, IConfiguration config, IRepositor
 
         var token = await Authenticate(dto.Email, dto.Password);
         return token;
+    }
+
+    public async Task<bool> SendResetPasswordCodeAsync(string email)
+    {
+        var user = await userRepo.Query()
+            .FirstOrDefaultAsync(x => x.Email == email);
+
+        if (user == null)
+            throw new Exception("User not found!");
+
+        var isCodeExist = await userResetRepo.Query()
+            .AnyAsync(x => x.UserId == user.Id && x.IsUsed == false && x.ExpiresAt > DateTime.Now);
+
+        if (isCodeExist)
+            return true;
+        
+        var resetCode = CodeGenerate.GenerateCode();
+
+
+        await userResetRepo.AddAsync(new UserResetCode{
+            Code = resetCode,
+            UserId = user.Id,
+            ExpiresAt = DateTime.Now.AddMinutes(2),
+            IsUsed = false
+        });
+        await userResetRepo.SaveChangesAsync();
+        
+        var template = templateRenderer.RenderAsync("reset-password", new { reset_code = resetCode });
+
+        await mailService.SendAsync(new()
+        {
+            To = email,
+            Subject = "Şifre Sıfırlama Kodu",
+            HtmlBody = await template,
+        });
+        
+        return true;
+    }
+
+    public async Task<bool> VerifyResetPasswordCode(string code, string email)
+    {
+        var user = await userRepo.Query()
+            .FirstOrDefaultAsync(x => x.Email == email);
+
+        if (user is null)
+            throw new Exception("Kullanıcı Bulunamadı!");
+
+        var resetCode = await userResetRepo.Query()
+            .Where(x => x.UserId == user.Id && x.Code == code && x.IsUsed != true)
+            .OrderByDescending(x => x.CreatedDate)
+            .FirstOrDefaultAsync();
+        
+        if (resetCode is null)
+            throw new Exception("Geçersiz Kod!");
+
+        if (resetCode.ExpiresAt < DateTime.UtcNow)
+            throw new Exception("Kodun geçerlilik süresi dolmuştur!");
+        
+        resetCode.IsUsed = true;
+        await userResetRepo.SaveChangesAsync();
+
+        return true;
     }
 }

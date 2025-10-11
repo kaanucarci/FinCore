@@ -7,12 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\FinCore.Core\FinCore.Core.csproj" />
       <ProjectReference Include="..\FinCore.DAL\FinCore.DAL.csproj" />
       <ProjectReference Include="..\FinCore.Entities\FinCore.Entities.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+      <PackageReference Include="MailKit" Version="4.14.0" />
     </ItemGroup>
 
 </Project>
