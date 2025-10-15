@@ -6,6 +6,6 @@ public class UserResetCode: BaseEntity
     public DateTime ExpiresAt { get; set; }
     public int UserId { get; set; }
     public bool IsUsed { get; set; } = false;
-
+    public bool IsVerified { get; set; } = false;
     public virtual User User { get; set; }
 }

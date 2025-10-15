@@ -85,13 +85,15 @@ public class AuthService(
             .FirstOrDefaultAsync(x => x.Email == email);
 
         if (user == null)
-            throw new Exception("User not found!");
+            throw new Exception("Kullanıcı Bulunamadı!");
 
         var isCodeExist = await userResetRepo.Query()
-            .AnyAsync(x => x.UserId == user.Id && x.IsUsed == false && x.ExpiresAt > DateTime.Now);
+            .AnyAsync(x => x.UserId == user.Id 
+                           && !x.IsUsed
+                           && x.ExpiresAt > DateTime.UtcNow);
 
         if (isCodeExist)
-            return true;
+            throw new Exception("120 saniyede bir kod gönderebilirsiniz!");
         
         var resetCode = CodeGenerate.GenerateCode();
 
@@ -99,7 +101,7 @@ public class AuthService(
         await userResetRepo.AddAsync(new UserResetCode{
             Code = resetCode,
             UserId = user.Id,
-            ExpiresAt = DateTime.Now.AddMinutes(2),
+            ExpiresAt = DateTime.UtcNow.AddMinutes(2),
             IsUsed = false
         });
         await userResetRepo.SaveChangesAsync();
@@ -116,16 +118,16 @@ public class AuthService(
         return true;
     }
 
-    public async Task<bool> VerifyResetPasswordCode(string code, string email)
+    public async Task<bool> VerifyResetPasswordCode(VerifyPasswordResetDto request)
     {
         var user = await userRepo.Query()
-            .FirstOrDefaultAsync(x => x.Email == email);
+            .FirstOrDefaultAsync(x => x.Email == request.email);
 
         if (user is null)
             throw new Exception("Kullanıcı Bulunamadı!");
 
         var resetCode = await userResetRepo.Query()
-            .Where(x => x.UserId == user.Id && x.Code == code && x.IsUsed != true)
+            .Where(x => x.UserId == user.Id && x.Code == request.code && !x.IsUsed)
             .OrderByDescending(x => x.CreatedDate)
             .FirstOrDefaultAsync();
         
@@ -136,8 +138,45 @@ public class AuthService(
             throw new Exception("Kodun geçerlilik süresi dolmuştur!");
         
         resetCode.IsUsed = true;
+        resetCode.IsVerified = true;
+        resetCode.UpdatedDate = DateTime.UtcNow;
         await userResetRepo.SaveChangesAsync();
 
+        return true;
+    }
+    
+    public async Task<bool> ResetPasswordAsync(PasswordResetDto request)
+    {
+        var user = await userRepo.Query()
+            .FirstOrDefaultAsync(x => x.Email == request.email);
+
+        if (user is null)
+            throw new Exception("Kullanıcı Bulunamadı!");
+
+        var resetCode = await userResetRepo.Query()
+            .FirstOrDefaultAsync(x => x.UserId == user.Id
+                      && x.IsUsed
+                      && x.IsVerified
+                      && x.Code == request.code);
+        
+        if (resetCode is null)
+            throw new Exception("Doğrulama Geçersiz!");    
+        
+        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.password);
+
+        if (hashedPassword == user.Password)
+        {
+            throw new Exception("Yeni şifre eski şifrenizle aynı olamaz!");
+        }
+        
+        user.Password = hashedPassword;
+        user.UpdatedDate = DateTime.UtcNow;
+        await userRepo.SaveChangesAsync();
+
+        resetCode.IsVerified = false;
+        await userResetRepo.SaveChangesAsync();
+
+        
         return true;
     }
 }

@@ -45,10 +45,12 @@ public sealed class MailService : IMailService
             await client.ConnectAsync(_smtp.Host, _smtp.Port, SecureSocketOptions.StartTls, ct);
             await client.AuthenticateAsync(_smtp.Username, _smtp.Password, ct);
             await client.SendAsync(email, ct);
+            Console.WriteLine("Mail sent successfully to :" + string.Join(", ", message.To));
             _logger.LogInformation("Mail sent successfully to {Recipients}", string.Join(", ", message.To));
         }
         catch (Exception ex)
         {
+            Console.WriteLine("Mail sending failed : " + ex);
             _logger.LogError(ex, "Mail sending failed.");
             throw;
         }

@@ -19,17 +19,17 @@ public class AuthController(IAuthService service) : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("register")]
-    public async Task<ActionResult<TokenDto>> Register(RegisterDto dto)
+    public async Task<ActionResult<TokenDto>> Register(RegisterDto request)
     {
-        var token = await service.Register(dto);
+        var token = await service.Register(request);
         return Ok(new TokenDto { Token = token });
     } 
     
     [AllowAnonymous]
     [HttpPost("send-reset-password-code")]
-    public async Task<ActionResult> SendResetPasswordCode(List<string> email)
+    public async Task<ActionResult> SendResetPasswordCode([FromBody] string email)
     {
-        var status = await service.SendResetPasswordCodeAsync(email.First());
+        var status = await service.SendResetPasswordCodeAsync(email);
 
         if (status)
             return Ok();
@@ -39,9 +39,21 @@ public class AuthController(IAuthService service) : ControllerBase
     
     [AllowAnonymous]
     [HttpPost("verify-reset-password-code")]
-    public async Task<ActionResult> VerifyResetPasswordCode(List<string> email, string code)
+    public async Task<ActionResult> VerifyResetPasswordCode([FromBody] VerifyPasswordResetDto request)
     {
-        var status = await service.VerifyResetPasswordCode(code, email.First());
+        var status = await service.VerifyResetPasswordCode(request);
+
+        if (status)
+            return Ok();
+
+        return BadRequest();
+    } 
+    
+    [AllowAnonymous]
+    [HttpPatch("reset-password")]
+    public async Task<ActionResult> ResetPassword([FromBody] PasswordResetDto request)
+    {
+        var status = await service.ResetPasswordAsync(request);
 
         if (status)
             return Ok();
