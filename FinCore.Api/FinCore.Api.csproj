@@ -23,5 +23,10 @@
     <ItemGroup>
       <ProjectReference Include="..\FinCore.BLL\FinCore.BLL.csproj" />
     </ItemGroup>
+    <ItemGroup>
+        <Content Include="Templates\**\*.*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 
 </Project>

@@ -157,17 +157,16 @@ public class AuthService(
             .FirstOrDefaultAsync(x => x.UserId == user.Id
                       && x.IsUsed
                       && x.IsVerified
-                      && x.Code == request.code);
+                      && x.Code == request.Code);
         
         if (resetCode is null)
             throw new Exception("Doğrulama Geçersiz!");    
         
-        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.password);
 
-        if (hashedPassword == user.Password)
-        {
+        if (BCrypt.Net.BCrypt.Verify(request.password, user.Password))
             throw new Exception("Yeni şifre eski şifrenizle aynı olamaz!");
-        }
+        
+        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.password);
         
         user.Password = hashedPassword;
         user.UpdatedDate = DateTime.UtcNow;

@@ -222,3 +222,14 @@
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/Microsoft.Extensions.FileProviders.Abstractions.dll
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/Microsoft.Extensions.FileProviders.Physical.dll
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/Microsoft.Extensions.FileSystemGlobbing.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/FinCore.Core.deps.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/FinCore.Core.runtimeconfig.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/FinCore.Core
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/BouncyCastle.Cryptography.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/MailKit.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/MimeKit.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/System.Security.Cryptography.Pkcs.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/FinCore.Core.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/FinCore.Core.pdb
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.Api/bin/Release/net8.0/Templates/reset-password.html

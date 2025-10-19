@@ -18,5 +18,5 @@ public class PasswordResetDto
     [Required]
     public string password { get; set; }
     [Required]
-    public string code { get; set; }
+    public string Code { get; set; }
 }

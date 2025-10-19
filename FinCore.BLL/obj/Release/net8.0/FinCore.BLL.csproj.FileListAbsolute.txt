@@ -16,3 +16,8 @@
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.BLL/obj/Release/net8.0/refint/FinCore.BLL.dll
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.BLL/obj/Release/net8.0/FinCore.BLL.pdb
 /Users/kaanucarci/Desktop/c#/FinCore/FinCore.BLL/obj/Release/net8.0/ref/FinCore.BLL.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.BLL/bin/Release/net8.0/FinCore.Core.deps.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.BLL/bin/Release/net8.0/FinCore.Core.runtimeconfig.json
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.BLL/bin/Release/net8.0/FinCore.Core
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.BLL/bin/Release/net8.0/FinCore.Core.dll
+/Users/kaanucarci/Desktop/c#/FinCore/FinCore.BLL/bin/Release/net8.0/FinCore.Core.pdb
